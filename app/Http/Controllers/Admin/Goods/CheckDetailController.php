@@ -10,13 +10,25 @@ use App\Http\Controllers\Controller;
 class CheckDetailController extends Controller
 {
     //查
-    public function index()
+    public function index(Request $request)
     {
     	
     	// $list = \DB::table('shop_goodsdetail')->get();
-    	$list = \DB::select("select * from shop_goodsdetail order by id");
+    	// $list = \DB::select("select * from shop_goodsdetail order by id");
+
     	// dd($list);
-    	return view('./admin/goods/goods-detail',['list'=>$list]);
+        $db = \DB::table('shop_goodsdetail');
+        $where = [];    //将搜索条件 保存至数组   
+        if($request->has('name')){
+            $name=$request->input('name');
+            // dd($name);
+            $db->where('goodsname','like',"%{$name}%");
+            $where['name']=$name;
+            // dd($where); 
+        }
+        $list = $db->orderBy('id')->Paginate(3);
+        $num = count($list);
+    	return view('./admin/goods/goods-detail',['list'=>$list,'num'=>$num,'where'=>$where]);
     	// return $id;
     }
 

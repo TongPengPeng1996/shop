@@ -14,13 +14,18 @@ class RecycleController extends Controller
     {
     	// $list = \DB::table('shop_goods')->get();
         $db = \DB::table('shop_goods');
-        $list = \DB::select(" select *,shop_categorys.id,shop_goods.id as gid from shop_categorys,shop_goods where shop_goods.cateid = shop_categorys.id and shop_goods.state = 3");
+        // $list = \DB::select(" select *,shop_categorys.id,shop_goods.id as gid from shop_categorys,shop_goods where shop_goods.cateid = shop_categorys.id and shop_goods.state = 3");
+        $list = \DB::table('shop_categorys')
+                    ->join('shop_goods','shop_categorys.id','=','shop_goods.cateid')
+                    ->where('shop_goods.state','3')
+                    ->select('shop_categorys.*','shop_goods.*')
+                    ->paginate(1);
         // $list = $db->paginate(1);
         // dd($list);
-        $count = \DB::select('select count(*) as num from shop_goods where state = 3');
-        $num = $count[0]->num;
-        // dd($num);
-    	return view('/admin/goods/commodity-list',['list'=>$list,'num'=>$num]);
+        $num = count($list);
+        // $num = $count[0]->num;
+        // dd($count);
+    	return view('/admin/goods/recycle',['list'=>$list,'num'=>$num]);
     }
 
 }

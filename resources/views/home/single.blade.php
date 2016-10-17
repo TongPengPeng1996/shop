@@ -1,29 +1,30 @@
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
  <head> 
   <title>商品详情</title> 
-  <link href="../../homes/css/bootstrap.css" rel="stylesheet" type="text/css" media="all" /> 
+  <link href="{{ asset('/homes/css/bootstrap.css') }}" rel="stylesheet" type="text/css" media="all" /> 
   <!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
-  <script src="../../homes/js/jquery.min.js"></script> 
+  <script src="{{ asset('/homes/js/jquery.min.js') }}"></script> 
   <!-- Custom Theme files --> 
   <!--theme-style--> 
-  <link href="../../homes/css/style.css" rel="stylesheet" type="text/css" media="all" /> 
+  <link href="{{ asset('/homes/css/style.css') }}" rel="stylesheet" type="text/css" media="all" /> 
+   <script src="{{ asset('/homes/js/jquery-1.8.3.min.js') }}"></script> 
   <!--//theme-style--> 
   <meta name="viewport" content="width=device-width, initial-scale=1" /> 
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <meta name="keywords" content="New Store Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template, 
 Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" /> 
   <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script> 
   <!--fonts--> 
-  <!-- <link href='http://fonts.useso.com/css?family=Lato:100,300,400,700,900' rel='stylesheet' type='text/css'>
-<link href='http://fonts.useso.com/css?family=Roboto:400,100,300,500,700,900' rel='stylesheet' type='text/css'> -->
+  
   <!--//fonts--> 
   <!-- start menu --> 
-  <link href="../../homes/css/memenu.css" rel="stylesheet" type="text/css" media="all" /> 
-  <script type="text/javascript" src="../../homes/js/memenu.js"></script> 
+  <link href="{{ asset('/homes/css/memenu.css') }}" rel="stylesheet" type="text/css" media="all" /> 
+  <script type="text/javascript" src="{{ asset('/homes/js/memenu.js') }}"></script> 
   <script>$(document).ready(function(){$(".memenu").memenu();});</script> 
-  <script src="../../homes/js/main.js"></script> 
-  <script src="../../homes/js/simpleCart.min.js"> </script> 
+  <script src="{{ asset('/homes/js/main.js') }}"></script> 
+  <script src="{{ asset('/homes/js/simpleCart.min.js') }}"> </script> 
  </head> 
  <body> 
   <!--header--> 
@@ -37,18 +38,23 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
       </form> 
      </div> 
      <div class="header-left"> 
-      <ul> 
-       <li><a class="lock" href="{{URL('/home/login')}}">登录</a></li> 
-       <li><a class="lock" href="{{URL('/home/register')}}">注册</a></li> 
-       <li> </li> 
-      </ul> 
+        @if(session('homeuser'))
+    <ul>
+      <li><a href="{{URL('/home/register')}}">欢迎 {{ session('homeuser') }} 的光临</a></li> 
+      <li><a href="{{URL('/home/logout')}}">退出</a></li>
+    </ul>
+  @else
+    <ul>
+      <li><a href="{{URL('/home/login')}}">登录</a></li> 
+      <li><a href="{{URL('/home/register')}}">注册</a></li> 
+    </ul>
+  @endif
       <div class="cart box_1"> 
        <a href="{{ URL('/home/checkout') }}"> <h3> 
          <div class="total"> 
           <span class="simpleCart_total"></span> (
           <span id="simpleCart_quantity" class="simpleCart_quantity"></span> items)
-         </div> <img src="../../homes/images/cart.png" alt="" /></h3> </a> 
-       <p><a href="javascript:void(0)" class="simpleCart_empty">显示用户名</a></p> 
+         </div> <img src="{{ asset('/homes/images/cart.png') }}" alt="" /></h3> </a> 
       </div> 
       <div class="clearfix"> 
       </div> 
@@ -60,7 +66,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
    <div class="container"> 
     <div class="head-top"> 
      <div class="logo"> 
-      <a href="{{URL('/')}}"><img src="../../homes/images/logo.png" alt="" /></a> 
+      <a href="{{URL('/')}}"><img src="{{ asset('/homes/images/logo.png') }}" alt="" /></a> 
      </div> 
      <div class=" h_menu4"> 
       <ul class="memenu skyblue"> 
@@ -71,105 +77,29 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
           <div class="col1"> 
            <div class="h_nav"> 
             <ul> 
-             <li><a href="{{URL('/home/products')}}">商品列表</a></li> 
-             <li><a href="products.html">Bags</a></li> 
-             <li><a href="products.html">Caps &amp; Hats</a></li> 
-             <li><a href="products.html">Hoodies &amp; Sweatshirts</a></li> 
-             <li><a href="products.html">Jackets &amp; Coats</a></li> 
-             <li><a href="products.html">Jeans</a></li> 
-             <li><a href="products.html">Jewellery</a></li> 
-             <li><a href="products.html">Jumpers &amp; Cardigans</a></li> 
-             <li><a href="products.html">Leather Jackets</a></li> 
-             <li><a href="products.html">Long Sleeve T-Shirts</a></li> 
-             <li><a href="products.html">Loungewear</a></li> 
+              @foreach($lei as $le)
+
+              @if($le->pid == 0)
+                  <li>|-<a href="{{URL('/home/products')}}/{{ $le->id }}" style="color:red;">{{ $le->catename }}</a></li> 
+              @else
+                  <li>|--<a href="{{URL('/home/products')}}/{{ $le->id }}">{{ $le->catename }}</a></li> 
+              @endif
+             @endforeach
+            
             </ul> 
            </div> 
           </div> 
           <div class="col1"> 
-           <div class="h_nav"> 
-            <ul> 
-             <li><a href="{{URL('/home/products')}}">Shirts</a></li> 
-             <li><a href="products.html">Shoes, Boots &amp; Trainers</a></li> 
-             <li><a href="products.html">Shorts</a></li> 
-             <li><a href="products.html">Suits &amp; Blazers</a></li> 
-             <li><a href="products.html">Sunglasses</a></li> 
-             <li><a href="products.html">Sweatpants</a></li> 
-             <li><a href="products.html">Swimwear</a></li> 
-             <li><a href="products.html">Trousers &amp; Chinos</a></li> 
-             <li><a href="products.html">T-Shirts</a></li> 
-             <li><a href="products.html">Underwear &amp; Socks</a></li> 
-             <li><a href="products.html">Vests</a></li> 
-            </ul> 
-           </div> 
+           
           </div> 
           <div class="col1"> 
            <div class="h_nav"> 
-            <h4>Popular Brands</h4> 
+            <h4>商品推荐</h4> 
             <ul> 
-             <li><a href="{{URL('/home/products')}}">Levis</a></li> 
-             <li><a href="products.html">Persol</a></li> 
-             <li><a href="products.html">Nike</a></li> 
-             <li><a href="products.html">Edwin</a></li> 
-             <li><a href="products.html">New Balance</a></li> 
-             <li><a href="products.html">Jack &amp; Jones</a></li> 
-             <li><a href="products.html">Paul Smith</a></li> 
-             <li><a href="products.html">Ray-Ban</a></li> 
-             <li><a href="products.html">Wood Wood</a></li> 
-            </ul> 
-           </div> 
-          </div> 
-         </div> 
-        </div> </li> 
-       <li class="grid"><a class="color2" href="javascript:void(0)"> 分类</a> 
-        <div class="mepanel"> 
-         <div class="row"> 
-          <div class="col1"> 
-           <div class="h_nav"> 
-            <ul> 
-             <li><a href="{{URL('/home/products')}}">Accessories</a></li> 
-             <li><a href="products.html">Bags</a></li> 
-             <li><a href="products.html">Caps &amp; Hats</a></li> 
-             <li><a href="products.html">Hoodies &amp; Sweatshirts</a></li> 
-             <li><a href="products.html">Jackets &amp; Coats</a></li> 
-             <li><a href="products.html">Jeans</a></li> 
-             <li><a href="products.html">Jewellery</a></li> 
-             <li><a href="products.html">Jumpers &amp; Cardigans</a></li> 
-             <li><a href="products.html">Leather Jackets</a></li> 
-             <li><a href="products.html">Long Sleeve T-Shirts</a></li> 
-             <li><a href="products.html">Loungewear</a></li> 
-            </ul> 
-           </div> 
-          </div> 
-          <div class="col1"> 
-           <div class="h_nav"> 
-            <ul> 
-             <li><a href="{{URL('/home/products')}}">Shirts</a></li> 
-             <li><a href="products.html">Shoes, Boots &amp; Trainers</a></li> 
-             <li><a href="products.html">Shorts</a></li> 
-             <li><a href="products.html">Suits &amp; Blazers</a></li> 
-             <li><a href="products.html">Sunglasses</a></li> 
-             <li><a href="products.html">Sweatpants</a></li> 
-             <li><a href="products.html">Swimwear</a></li> 
-             <li><a href="products.html">Trousers &amp; Chinos</a></li> 
-             <li><a href="products.html">T-Shirts</a></li> 
-             <li><a href="products.html">Underwear &amp; Socks</a></li> 
-             <li><a href="products.html">Vests</a></li> 
-            </ul> 
-           </div> 
-          </div> 
-          <div class="col1"> 
-           <div class="h_nav"> 
-            <h4>Popular Brands</h4> 
-            <ul> 
-             <li><a href="{{URL('/home/products')}}">Levis</a></li> 
-             <li><a href="products.html">Persol</a></li> 
-             <li><a href="products.html">Nike</a></li> 
-             <li><a href="products.html">Edwin</a></li> 
-             <li><a href="products.html">New Balance</a></li> 
-             <li><a href="products.html">Jack &amp; Jones</a></li> 
-             <li><a href="products.html">Paul Smith</a></li> 
-             <li><a href="products.html">Ray-Ban</a></li> 
-             <li><a href="products.html">Wood Wood</a></li> 
+              @foreach($recommend as $rec)
+             <li><a href="{{URL('/home/products')}}">{{ $rec->proname }}</a></li> 
+             @endforeach
+         
             </ul> 
            </div> 
           </div> 
@@ -196,35 +126,17 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
       </div> 
       <ul class="menu"> 
        <li class="item1"><a href="javascript:void(0)">分类 </a> 
-        <ul class="cute"> 
-         <li class="subitem1"><a href="{{URL('/home/single')}}">商品详情 </a></li> 
-         <li class="subitem2"><a href="{{URL('/home/single')}}">Strange Stuff </a></li> 
-         <li class="subitem3"><a href="{{URL('/home/single')}}">Automatic Fails </a></li> 
-        </ul> </li> 
-       <li class="item2"><a href="javascript:void(0)">Women </a> 
-        <ul class="cute"> 
-         <li class="subitem1"><a href="{{URL('/home/single')}}">Cute Kittens </a></li> 
-         <li class="subitem2"><a href="{{URL('/home/single')}}">Strange Stuff </a></li> 
-         <li class="subitem3"><a href="{{URL('/home/single')}}">Automatic Fails </a></li> 
-        </ul> </li> 
-       <li class="item3"><a href="javascript:void(0)">Kids</a> 
-        <ul class="cute"> 
-         <li class="subitem1"><a href="{{URL('/home/single')}}">Cute Kittens </a></li> 
-         <li class="subitem2"><a href="{{URL('/home/single')}}">Strange Stuff </a></li> 
-         <li class="subitem3"><a href="#">Automatic Fails</a></li> 
-        </ul> </li> 
-       <li class="item4"><a href="javascript:void(0)">Accesories</a> 
-        <ul class="cute"> 
-         <li class="subitem1"><a href="{{URL('/home/single')}}">Cute Kittens </a></li> 
-         <li class="subitem2"><a href="{{URL('/home/single')}}">Strange Stuff </a></li> 
-         <li class="subitem3"><a href="#">Automatic Fails</a></li> 
-        </ul> </li> 
-       <li class="item4"><a href="javascript:void(0)">Shoes</a> 
-        <ul class="cute"> 
-         <li class="subitem1"><a href="{{URL('/home/single')}}">Cute Kittens </a></li> 
-         <li class="subitem2"><a href="#">Strange Stuff </a></li> 
-         <li class="subitem3"><a href="{{URL('/home/single')}}">Automatic Fails </a></li> 
-        </ul> </li> 
+          <ul class="cute"> 
+            @foreach($lei as $lll)
+              @if($lll->pid == 0)
+                  <li class="subitem1">|-<a href="{{URL('/home/products')}}/{{ $lll->id }}" style="color:red;">{{ $lll->catename }}</a></li> 
+              @else
+                  <li class="subitem1">|--<a href="{{URL('/home/products')}}/{{ $lll->id }}">{{ $lll->catename }}</a></li> 
+              @endif
+           @endforeach
+          </ul> 
+        </li> 
+      
       </ul> 
      </div> 
      <!--initiate accordion--> 
@@ -263,8 +175,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
       </div> 
       <div class="tags"> 
        <ul> 
-        <li><a href="#">衣服</a></li> 
-        <li><a href="#">fashion</a></li> 
+        @foreach($recommend as $recom)
+        <li><a href="{{ URL('/home/single') }}/{{ $recom->id }}/edit">{{ $recom->proname }}</a></li>
+        @endforeach 
+        <!-- <li><a href="#">fashion</a></li> 
         <li><a href="#">lorem</a></li> 
         <li><a href="#">dress</a></li> 
         <li><a href="#">fashion</a></li> 
@@ -274,7 +188,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         <li><a href="#">design</a></li> 
         <li><a href="#">fashion</a></li> 
         <li><a href="#">lorem</a></li> 
-        <li><a href="#">dress</a></li> 
+        <li><a href="#">dress</a></li>  -->
         <div class="clearfix"> 
         </div> 
        </ul> 
@@ -283,23 +197,25 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
      <!----> 
      <div class="product-bottom"> 
       <div class="of-left-in"> 
-       <h3 class="best">爆款热卖</h3> 
+       <h3 class="best">商城推荐</h3> 
       </div> 
+      @foreach($recommend as $commend)
       <div class="product-go"> 
        <div class=" fashion-grid"> 
-        <!-- 跳到商品详情 --> 
-        <a href="{{URL('/home/single')}}"><img class="img-responsive " src="../../homes/images/p1.jpg" alt="" /></a> 
+        <!-- 跳到商品详情 -->
+        <a href="{{URL('/home/single')}}/{{ $commend->id }}/edit"><img class="img-responsive " src="{{ asset('/uploads') }}/{{ $commend->image }}" alt="" /></a> 
        </div> 
        <div class=" fashion-grid1"> 
-        <h6 class="best2"><a href="{{URL('/home/single')}}">产品介绍(自动蹦到商品详情) </a></h6> 
-        <span class=" price-in1"> $40.00</span> 
+        <h6 class="best2"><a href="{{URL('/home/single')}}">{{ $commend->descript }} </a></h6> 
+        <span class=" price-in1"> ￥{{ $commend->price }}</span> 
        </div> 
        <div class="clearfix"> 
-       </div> 
+       </div>
       </div> 
-      <div class="product-go"> 
+      @endforeach
+      <!-- <div class="product-go"> 
        <div class=" fashion-grid"> 
-        <a href="{{URL('/home/single')}}"><img class="img-responsive " src="../../homes/images/p2.jpg" alt="" /></a> 
+        <a href="{{URL('/home/single')}}"><img class="img-responsive " src="{{ asset('/homes/images/p2.jpg') }}" alt="" /></a> 
        </div> 
        <div class="fashion-grid1"> 
         <h6 class="best2"><a href="{{URL('/home/single')}}">Lorem ipsum dolor sit amet consectetuer </a></h6> 
@@ -307,31 +223,27 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
        </div> 
        <div class="clearfix"> 
        </div> 
-      </div> 
+      </div>  -->
      </div> 
      <div class=" per1"> 
       <!-- 跳到商品详情 --> 
-      <a href="{{URL('/home/single')}}"><img class="img-responsive" src="../../homes/images/pro.jpg" alt="" /> 
+      <a href="#"><img class="img-responsive" src="{{ asset('/homes/images/pro.jpg') }}" alt="" /> 
        <div class="six1"> 
         <h4>特惠</h4> 
         <p>抢购</p> 
-        <span>60%</span> 
+        
        </div></a> 
      </div> 
     </div> 
     <div class="col-md-9 product-price1"> 
      <div class="col-md-5 single-top"> 
       <div class="flexslider"> 
-       <ul class="slides"> 
-        <li data-thumb="../../homes/images/si.jpg"> <img src="../../homes/images/si.jpg" /> </li> 
-        <li data-thumb="../../homes/images/si1.jpg"> <img src="../../homes/images/si1.jpg" /> </li> 
-        <li data-thumb="../../homes/images/si2.jpg"> <img src="../../homes/images/si2.jpg" /> </li> 
-        <li data-thumb="../../homes/images/si.jpg"> <img src="../../homes/images/si.jpg" /> </li> 
-       </ul> 
+        <img src="{{ asset('/uploads') }}/{{ $list->image }}" width="300" height="400">
+       
       </div> 
       <!-- FlexSlider --> 
-      <script defer="" src="../../homes/js/jquery.flexslider.js"></script> 
-      <link rel="stylesheet" href="../../homes/css/flexslider.css" type="text/css" media="screen" /> 
+      <script defer="" src="{{ asset('/homes/js/jquery.flexslider.js') }}"></script> 
+      <link rel="stylesheet" href="{{ asset('/homes/css/flexslider.css') }}" type="text/css" media="screen" /> 
       <script>
 // Can also be used with $(document).ready()
 $(window).load(function() {
@@ -342,9 +254,13 @@ $(window).load(function() {
 });
 </script> 
      </div> 
+     <!-- 张鹏宇 -->
+      <form action="{{ URL('/home/ok-order') }}" method="get">
+     <!-- 张鹏宇 -->
+
      <div class="col-md-7 single-top-in simpleCart_shelfItem"> 
       <div class="single-para "> 
-       <h4>Lorem Ipsum</h4> 
+       <h4>{{ $list->proname }}</h4> 
        <div class="star-on"> 
         <ul class="star-footer"> 
          <li><a href="#"><i> </i></a></li> 
@@ -354,125 +270,97 @@ $(window).load(function() {
          <li><a href="#"><i> </i></a></li> 
         </ul> 
         <div class="review"> 
-         <a href="javascript:void(0)"> 1 customer review </a> 
+          <!-- {{ $list->id }}   这是商品id -->   
+         <a href="javascript:void(0)"> 1 customer review {{ $list->id }}</a> 
         </div> 
         <div class="clearfix"> 
         </div> 
        </div> 
-       <h5 class="item_price">$ 95.00</h5> 
-       <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat </p> 
+       <h5 class="item_price">￥ {{ $list->price }}</h5> 
+       <p>{{ $list->descript }}</p> 
        <div class="available"> 
         <ul> 
-         <li>Color <select> <option>Silver</option> <option>Black</option> <option>Dark Black</option> <option>Red</option> </select></li> 
-         <li class="size-in">Size<select> <option>Large</option> <option>Medium</option> <option>small</option> <option>Large</option> <option>small</option> </select></li> 
+         <li>颜色
+         
+         <input type="text" name='color' value="{{ $detail->color }}" style="width:350px;height:45px;margin-left:32px;" disabled>
+       </li> 
+         <li class="size-in">尺寸
+         
+           <input type="text" name='size' value="{{ $detail->size }}" style="width:350px;height:45px;margin-left:32px;" disabled>
+        </li> 
          <div class="clearfix"> 
          </div> 
         </ul> 
        </div> 
        <ul class="tag-men"> 
-        <li><span>TAG</span> <span class="women1">: Women,</span></li> 
-        <li><span>SKU</span> <span class="women1">: CK09</span></li> 
+        
+          购买数量：
+          <!-- 张鹏宇 -->
+             <!--  <a href="Javascript:void(0)"><button style="width:30px;" >-</button></a>
+                 <input type='text' name='num' class='num' style="float:left;width:50px;" value='1'>
+                 <button style="width:30px;" >+</button>
+              <a href="Javascript:"> -->
+                <!-- 坏的 -->
+                件
+          <!-- 张鹏宇 -->
+
        </ul> 
-       <a href="#" class="add-cart item_add">立即购买</a> 
-       <a href="{{URL('/home/checkout')}}" class="add-cart item_add">添加到购物车</a> 
-       <a href="#" class="add-cart item_add">添加收藏</a> 
+      
+        
+        <input class="add-cart item_add" type="submit" value="立即购买" style="background-color:#EF5F21;font-size:17px;color:white;height:28px;width:100px;text-decoration:none;">
+       <a href="{{URL('/home/checkout')}}/{{ $list->id }}" id="url" class="add-cart item_add">添加到购物车</a> 
+       <a href="#" class="add-cart item_add">添加收藏</a>
       </div> 
      </div> 
+     <!-- 张鹏宇 -->
+          </form>
+      <!-- 张鹏宇 -->
+
      <div class="clearfix"> 
      </div> 
      <!----> 
      <div class="cd-tabs"> 
       <nav> 
        <ul class="cd-tabs-navigation"> 
-        <li><a data-content="fashion" href="#0">描述 </a></li> 
+    <!-- (((((((((((((((((((((()))))))))))))))))))))) -->
         <li><a data-content="cinema" href="#0">产品所有的参数 </a></li> 
-        <li><a data-content="television" href="#0" class="selected ">评论</a></li> 
+      <!-- ((((((((((((((((((())))))))))))))))))) -->
        </ul> 
       </nav> 
       <ul class="cd-tabs-content"> 
-       <li data-content="fashion"> 
-        <div class="facts"> 
-         <p> 商品的描述内容 </p> 
-         <ul> 
-          <li>Research</li> 
-          <li>Design and Development</li> 
-          <li>Porting and Optimization</li> 
-          <li>System integration</li> 
-          <li>Verification, Validation and Testing</li> 
-          <li>Maintenance and Support</li> 
-         </ul> 
-        </div> </li> 
+     
        <li data-content="cinema"> 
         <div class="facts1"> 
          <div class="color">
-          <p>Color</p> 
-          <span>Blue, Black, Red</span> 
+          <p>颜色</p> 
+          <span>{{ $detail->color }}</span> 
           <div class="clearfix"></div> 
          </div> 
          <div class="color"> 
-          <p>Size</p> 
-          <span>S, M, L, XL</span> 
+          <p>尺寸</p> 
+          <span>{{ $detail->size }}</span> 
           <div class="clearfix"></div> 
          </div> 
         </div> </li> 
-       <li data-content="television" class="selected"> 
-        <div class="comments-top-top"> 
-         <div class="top-comment-left"> 
-          <!-- 用户头像 --> 
-          <img class="img-responsive" src="../../homes/images/co.png" alt="" /> 
-         </div> 
-         <div class="top-comment-right"> 
-          <h6><a href="#">Hendri(用户名)</a> - September 3, 2014（发表日期）</h6> 
-          <!-- 星级打分 --> 
-          <ul class="star-footer"> 
-           <li><a href="#"><i> </i></a></li> 
-           <li><a href="#"><i> </i></a></li> 
-           <li><a href="#"><i> </i></a></li> 
-           <li><a href="#"><i> </i></a></li> 
-           <li><a href="#"><i> </i></a></li> 
-          </ul> 
-          <p>Wow nice!（内容）</p> 
-         </div> 
-         <div class="clearfix"> 
-         </div> 
-         <!-- 跳到当前页 --> 
-         <a class="add-re" href="#">点击添加评论</a> 
-        </div> </li> 
+       
        <div class="clearfix"></div> 
       </ul> 
      </div> 
      <div class=" bottom-product"> 
-      <div class="col-md-4 bottom-cd simpleCart_shelfItem"> 
+      <center><h2 style="color:magenta;">镇店之宝</h2></center>
+      <!-- 镇店之宝  非卖品 -->
+      @foreach($introduce as $intro)
+      <div class="col-md-4 bottom-cd simpleCart_shelfItem" style="margin-top:20px;"> 
        <div class="product-at "> 
-        <a href="{{URL('/home/single')}}"><img class="img-responsive" src="../../homes/images/pi3.jpg" alt="" /> 
-         <div class="pro-grid"> 
-          <span class="buy-in">此商品的详情</span> 
+        <a href="javascript:void(0)"><img class="img-responsive" src="{{ asset('/uploads') }}/{{ $intro->GoodsImage }}" style="width:200px;height:200px;" /> <div class="pro-grid">
+          <span class="buy-in">{{ $intro->GoodsName }}</span> 
          </div> </a> 
        </div> 
-       <p class="tun">It is a long established fact that a reader</p> 
-       <a href="#" class="item_add"><p class="number item_price"><i> </i>$500.00</p></a> 
+       <p class="tun">{{ $intro->descript }}<span style="font-size:15px;color:red;">(非卖品)</span></p> 
+       <a href="javascript:void(0)" class="item_add"><p class="number item_price"><i> </i>￥ {{ $intro->GoodsPrice }}</p></a> 
       </div> 
-      <div class="col-md-4 bottom-cd simpleCart_shelfItem"> 
-       <div class="product-at "> 
-        <!-- 商品详情 --> 
-        <a href="{{URL('/home/single')}}"><img class="img-responsive" src="../../homes/images/pi1.jpg" alt="" /> 
-         <div class="pro-grid"> 
-          <span class="buy-in">Buy Now</span> 
-         </div> </a> 
-       </div> 
-       <p class="tun">It is a long established fact that a reader</p> 
-       <a href="#" class="item_add"><p class="number item_price"><i> </i>$500.00</p></a> 
-      </div> 
-      <div class="col-md-4 bottom-cd simpleCart_shelfItem"> 
-       <div class="product-at "> 
-        <a href="{{URL('/home/single')}}"><img class="img-responsive" src="../../homes/images/pi4.jpg" alt="" /> 
-         <div class="pro-grid"> 
-          <span class="buy-in">Buy Now</span> 
-         </div> </a> 
-       </div> 
-       <p class="tun">It is a long established fact that a reader</p> 
-       <a href="#" class="item_add"><p class="number item_price"><i> </i>$500.00</p></a> 
-      </div> 
+      @endforeach
+      
       <div class="clearfix"> 
       </div> 
      </div> 
@@ -522,6 +410,33 @@ $(window).load(function() {
    <div class="footer-class"> 
     <p>Team&copy; 2016.Just tonight do it. <a href="#" target="_blank" title="三人行">三人行</a> - Motto <a href="#" title="三人行" target="_blank">必有我师焉</a></p> 
    </div> 
-  </div>   
+  </div>
+  <script type="text/javascript">
+    // $('#inputid').blur(function(){
+    //   var num = $('#inputid').val();
+    //   // alert(num);
+    //   var id = $('#lid').val();
+    //   // console.log(id);
+    //   // alert(id);
+    //   $ajax({
+    //     url:'/home/checkout/create',
+    //     type:'get',
+    //     asyns:true,
+    //     data:{nums:num},
+    //     headers: {
+    //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    //     }
+    //   });
+    // });
+    // var url = document.getElementById('url');
+    // var num = document.getElementById('num');
+    // var a = num.value;
+
+    // id.href = '{{URL('/home/checkouts')}}/{{ $list->id }}/'+a;
+
+    // num.blur(function(){
+    //   alert(num.value);
+    // });
+  </script>   
  </body>
 </html>

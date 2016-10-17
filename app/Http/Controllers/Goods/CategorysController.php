@@ -16,6 +16,7 @@ class CategorysController extends Controller
     	// 全部的按级别排序
     	$list = \DB::select("select *,concat(path,id) as newpath from shop_categorys order by newpath");
     	// dd($list[0]->id);
+        
     	//有商品的查询
     	// $list_s = \DB::select("select *,shop_categorys.catename,shop_categorys.id,shop_goods.cateid,concat(shop_categorys.path,shop_categorys.id) as newpath from shop_categorys,shop_goods where shop_goods.cateid = shop_categorys.id order by newpath");
     	// $data = $list->toArray();
@@ -47,11 +48,11 @@ class CategorysController extends Controller
     {
     	$m = \DB::table('shop_categorys')->where('id',$id)->delete();
     	if($m > 0){
-    		redirect('/admin/goods/product-categorys');
+    		return redirect('/admin/goods/product-categorys');
     		// return '删除成功';
     	}else{
     		// return '删除失败';
-    		redirect('/admin/goods/product-categorys');
+    		return redirect('/admin/goods/product-categorys');
     	}
     }
     // 增加（不用做有type控制器做了）

@@ -4,10 +4,11 @@
   <title>主页</title> 
   <link href="{{ asset('/homes/css/bootstrap.css') }}" rel="stylesheet" type="text/css" media="all" /> 
   <!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
-  <script src="./homes/js/jquery.min.js"></script> 
+  <script src="{{ asset('/homes/js/jquery.min.js') }}"></script> 
+  <script type="text/javascript" src="{{ asset('/homes/js/jquery-1.8.3.min.js') }}"></script>
   <!-- Custom Theme files --> 
   <!--theme-style--> 
-  <link href="./homes/css/style.css" rel="stylesheet" type="text/css" media="all" /> 
+  <link href="{{ asset('/homes/css/style.css') }}" rel="stylesheet" type="text/css" media="all" /> 
   <!--//theme-style--> 
   <meta name="viewport" content="width=device-width, initial-scale=1" /> 
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
@@ -17,10 +18,17 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
   <!--fonts--> 
   <!--fonts--> 
   <!-- start menu --> 
-  <link href="./homes/css/memenu.css" rel="stylesheet" type="text/css" media="all" /> 
-  <script type="text/javascript" src="./homes/js/memenu.js"></script> 
-  <script>$(document).ready(function(){$(".memenu").memenu();});</script> 
-  <script src="./homes/js/simpleCart.min.js"> </script> 
+  <link href="{{ asset('/homes/css/memenu.css') }}" rel="stylesheet" type="text/css" media="all" /> 
+  <script type="text/javascript" src="{{ asset('/homes/js/memenu.js') }}"></script> 
+  <script>
+    $(document).ready(
+        function(){
+          $(".memenu").memenu();
+        });
+
+
+  </script> 
+  <script src="{{ asset('/homes/js/simpleCart.min.js') }}"> </script> 
  </head> 
  <body> 
   <!--header--> 
@@ -68,14 +76,26 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
      <div class=" h_menu4"> 
       <ul class="memenu skyblue"> 
        <li class="active grid"><a class="color8" href="{{URL('/')}}">主页</a></li> 
-       <li><a class="color1" href="javascript:void(0)">男装</a> 
+       <!-- 顶级类 -->
+       
+       <li><a class="color1" href="javascript:void(0)">大类</a> 
+        
+        <!-- 顶级类结束 -->
         <div class="mepanel"> 
          <div class="row"> 
           <div class="col1"> 
+
            <div class="h_nav"> 
             <ul> 
-             <li><a href="{{URL('/home/products')}}">列表详情键</a></li> 
-             <li><a href="{{URL('/home/products')}}">Bags</a></li> 
+              <!-- 子类 -->
+              @foreach($lei as $le)
+              @if($le->pid == 0)
+             <li>|-<a href="{{URL('/home/products')}}/{{ $le->id }}" class ='lid' style="color:red;">{{ $le->catename }}</a></li> 
+             @else
+            <li>|---<a href="{{URL('/home/products')}}/{{ $le->id }}" class ='lid'>{{ $le->catename }}</a></li> 
+             @endif
+                <!-- 子类结束 -->
+            <!--  <li><a href="{{URL('/home/products')}}">Bags</a></li> 
              <li><a href="products.html">Caps &amp; Hats</a></li> 
              <li><a href="products.html">Hoodies &amp; Sweatshirts</a></li> 
              <li><a href="products.html">Jackets &amp; Coats</a></li> 
@@ -84,46 +104,38 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
              <li><a href="products.html">Jumpers &amp; Cardigans</a></li> 
              <li><a href="products.html">Leather Jackets</a></li> 
              <li><a href="products.html">Long Sleeve T-Shirts</a></li> 
-             <li><a href="products.html">Loungewear</a></li> 
+             <li><a href="products.html">Loungewear</a></li>  -->
+              @endforeach 
             </ul> 
+           
+
            </div> 
+          </div> 
+
+          <div class="col1"> 
+           
           </div> 
           <div class="col1"> 
            <div class="h_nav"> 
+            <h4>商品推荐</h4> 
             <ul> 
-             <li><a href="{{URL('/home/products')}}">列表详情键</a></li> 
-             <li><a href="{{URL('/home/products')}}">Shoes, Boots &amp; Trainers</a></li> 
-             <li><a href="{{URL('/home/products')}}">Shorts</a></li> 
-             <li><a href="{{URL('/home/products')}}">Suits &amp; Blazers</a></li> 
-             <li><a href="products.html">Sunglasses</a></li> 
-             <li><a href="products.html">Sweatpants</a></li> 
-             <li><a href="products.html">Swimwear</a></li> 
-             <li><a href="products.html">Trousers &amp; Chinos</a></li> 
-             <li><a href="products.html">T-Shirts</a></li> 
-             <li><a href="products.html">Underwear &amp; Socks</a></li> 
-             <li><a href="products.html">Vests</a></li> 
-            </ul> 
-           </div> 
-          </div> 
-          <div class="col1"> 
-           <div class="h_nav"> 
-            <h4>Popular Brands</h4> 
-            <ul> 
-             <li><a href="{{URL('/home/products')}}">列表详情键</a></li> 
-             <li><a href="products.html">Persol</a></li> 
+              @foreach($recommend as $commend)
+             <li><a href="{{URL('/home/single')}}/{{ $commend->id }}/edit">{{ $commend->proname }}</a></li> 
+             @endforeach
+             <!-- <li><a href="products.html">Persol</a></li> 
              <li><a href="products.html">Nike</a></li> 
              <li><a href="products.html">Edwin</a></li> 
              <li><a href="products.html">New Balance</a></li> 
              <li><a href="products.html">Jack &amp; Jones</a></li> 
              <li><a href="products.html">Paul Smith</a></li> 
              <li><a href="products.html">Ray-Ban</a></li> 
-             <li><a href="products.html">Wood Wood</a></li> 
+             <li><a href="products.html">Wood Wood</a></li>  -->
             </ul> 
            </div> 
           </div> 
          </div> 
         </div> </li> 
-       <li class="grid"><a class="color2" href="#"> 女装</a> 
+      <!--  <li class="grid"><a class="color2" href="#"> 女装</a> 
         <div class="mepanel"> 
          <div class="row"> 
           <div class="col1"> 
@@ -177,7 +189,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
            </div> 
           </div> 
          </div> 
-        </div> </li> 
+        </div> </li>  -->
        <li><a class="color4" href="{{URL('/home/blog')}}">更多资讯</a></li> 
        <li><a class="color6" href="{{URL('/home/contact')}}">联系</a></li> 
 	   <li><a class="color6" href="{{URL('/home/user_center')}}">个人中心</a></li>  
@@ -190,7 +202,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
   </div> 
   <div class="banner"> 
    <div class="container"> 
-    <script src="./homes/js/responsiveslides.min.js"></script> 
+    <script src="{{ asset('/homes/js/responsiveslides.min.js') }}"></script> 
     <script>
     $(function () {
       $("#slider").responsiveSlides({
@@ -211,21 +223,23 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         <h3>挑逗视觉神经</h3> 
         <p>尝试过了夏季的“飞檐走壁”，的超能女汉子，秋季怎么样才能变身浪漫的治愈少女？打造玲珑有致的曲线，提升温暖感！换上秋季新装，接触酷女郎利器，拥抱暖意融融的秋天吧！</p> 
         <!-- 详情 --> 
-        <a href="{{URL('/home/single')}}">一样的流派，不一样的做派。</a> 
-       </div> </li> 
+        <a href="javascript:void(0)">一样的流派，不一样的做派。</a> 
+       </div> 
+     </li> 
       <li> 
        <div class="banner-text"> 
         <h3>让穿搭造型像音乐一样具有节奏感 </h3>
         <br /> 
         <p>衣服不单单是布料是与你肌肤之亲的生命</p> 
-        <a href="single.html">Listen to the music</a> 
+        <a href="javascript:void(0)">Listen to the music</a> 
        </div> </li> 
       <li> 
        <div class="banner-text"> 
         <h3>Still waiting for something</h3> 
         <p>为消费者打造一个风格突出、与众不同的时尚品牌，用合理的价格为中国中产阶级时尚人士提供丰富、精致的时尚产品。</p> 
-        <a href="single.html">Just do It</a> 
-       </div> </li> 
+        <a href="javascript:void(0)">Just do It</a> 
+       </div> 
+     </li> 
      </ul> 
     </div> 
    </div> 
@@ -236,95 +250,68 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <div class="content-top"> 
      <h1>新产品</h1> 
      <div class="grid-in"> 
+      <!-- ************新产品****************** -->
+      @foreach($newproduct as $newp)
       <div class="col-md-4 grid-top"> 
-       <!-- 详情 --> 
-       <a href="{{URL('/home/single')}}" class="b-link-stripe b-animate-go  thickbox"><img class="img-responsive" src="./homes/images/pi.jpg" alt="" /> 
+       <!-- 详情 -->
+       @if($newp->state == 3)
+       <a href="javascript:void(0)" class="b-link-stripe b-animate-go  thickbox">
+        @else
+        <a href="{{URL('/home/single')}}/{{ $newp->id }}/edit" class="b-link-stripe b-animate-go  thickbox"> 
+        @endif
+        <img class="img-responsive" src="{{ asset('/uploads/s_') }}{{ $newp->image }}" alt="" disabled/> 
         <div class="b-wrapper"> 
-         <h3 class="b-animate b-from-left    b-delay03 "> <span>T-Shirt</span> </h3> 
+         <h3 class="b-animate b-from-left    b-delay03 "> <span>{{ $newp->proname }}</span> </h3> 
         </div> </a> 
-       <p><a href="single.html">Contrary to popular</a></p> 
+       <p>
+        @if($newp->state == 3)
+        <a href="javascript:void(0)">
+         @else
+         <a href="{{ URL('/admin/single') }}/{{ $newp->id }}/edit">
+         @endif 
+          {{ $newp->descript }}
+        @if($newp->state == 1)
+          <span style="color:orange;">【新品上市】</span>
+        @elseif($newp->state == 2)
+          <span style="color:red;">【火爆热销】</span>
+        @else
+          <span style="color:grey;">【供不应求】</span>
+        @endif
+       </a></p> 
       </div> 
-      <div class="col-md-4 grid-top"> 
-       <a href="single.html" class="b-link-stripe b-animate-go  thickbox"><img class="img-responsive" src="./homes/images/pi1.jpg" alt="" /> 
-        <div class="b-wrapper"> 
-         <h3 class="b-animate b-from-left    b-delay03 "> <span>Shoe</span> </h3> 
-        </div> </a> 
-       <p><a href="single.html">classical Latin</a></p> 
-      </div> 
-      <div class="col-md-4 grid-top"> 
-       <!-- 详情 --> 
-       <a href="{{URL('/home/single')}}" class="b-link-stripe b-animate-go  thickbox"><img class="img-responsive" src="./homes/images/pi.jpg" alt="" /> 
-        <div class="b-wrapper"> 
-         <h3 class="b-animate b-from-left    b-delay03 "> <span>T-Shirt</span> </h3> 
-        </div> </a> 
-       <p><a href="single.html">Contrary to popular</a></p> 
-      </div> 
-      <div class="clearfix"> 
-       <!-- 加东西  --> 
-      </div> 
-     </div> 
-     <div class="grid-in"> 
-      <div class="col-md-4 grid-top"> 
-       <a href="single.html" class="b-link-stripe b-animate-go  thickbox"><img class="img-responsive" src="./homes/images/pi3.jpg" alt="" /> 
-        <div class="b-wrapper"> 
-         <h3 class="b-animate b-from-left    b-delay03 "> <span>Shirt</span> </h3> 
-        </div> </a> 
-       <p><a href="single.html">suffered alteration</a></p> 
-      </div> 
-      <div class="col-md-4 grid-top"> 
-       <a href="single.html" class="b-link-stripe b-animate-go  thickbox"><img class="img-responsive" src="./homes/images/pi4.jpg" alt="" /> 
-        <div class="b-wrapper"> 
-         <h3 class="b-animate b-from-left    b-delay03 "> <span>Bag</span> </h3> 
-        </div> </a> 
-       <p><a href="single.html">Content here</a></p> 
-      </div> 
-      <div class="col-md-4 grid-top"> 
-       <a href="single.html" class="b-link-stripe b-animate-go  thickbox"><img class="img-responsive" src="./homes/images/pi5.jpg" alt="" /> 
-        <div class="b-wrapper"> 
-         <h3 class="b-animate b-from-left    b-delay03 "> <span>Shoe</span> </h3> 
-        </div> </a> 
-       <p><a href="single.html">readable content</a></p> 
-      </div> 
-      <!-- 测试 --> 
+      @endforeach
+      <!-- *********************************** -->
+      
+      <!-- 清除左浮动  --> 
       <div class="clearfix"> 
       </div> 
-      <!-- 测试 --> 
+      <!-- 清除左浮动结束 --> 
      </div> 
     </div> 
     <!--遍历的内容--> 
     <div class="content-top-bottom"> 
-     <h2>经典款</h2> 
-     <div class="col-md-6 men"> 
-      <!-- 详情 --> 
-      <a href="{{URL('/home/single')}}" class="b-link-stripe b-animate-go  thickbox"><img class="img-responsive" src="./homes/images/t1.jpg" alt="" /> 
-       <div class="b-wrapper"> 
-        <h3 class="b-animate b-from-top top-in   b-delay03 "> <span>Lorem</span> </h3> 
-       </div> </a> 
-     </div> 
-     <div class="col-md-6"> 
-      <div class="col-md1 "> 
-       <a href="single.html" class="b-link-stripe b-animate-go  thickbox"><img class="img-responsive" src="./homes/images/t2.jpg" alt="" /> 
-        <div class="b-wrapper"> 
-         <h3 class="b-animate b-from-top top-in1   b-delay03 "> <span>Lorem</span> </h3> 
-        </div> </a> 
-      </div> 
-      <div class="col-md2"> 
-       <div class="col-md-6 men1"> 
-        <a href="single.html" class="b-link-stripe b-animate-go  thickbox"><img class="img-responsive" src="./homes/images/t3.jpg" alt="" /> 
-         <div class="b-wrapper"> 
-          <h3 class="b-animate b-from-top top-in2   b-delay03 "> <span>Lorem</span> </h3> 
-         </div> </a> 
-       </div> 
-       <div class="col-md-6 men2"> 
-        <a href="single.html" class="b-link-stripe b-animate-go  thickbox"><img class="img-responsive" src="./homes/images/t4.jpg" alt="" /> 
-         <div class="b-wrapper"> 
-          <h3 class="b-animate b-from-top top-in2   b-delay03 "> <span>Lorem</span> </h3> 
-         </div> </a> 
-       </div> 
-       <div class="clearfix"> 
-       </div> 
-      </div> 
-     </div> 
+     <h2>限时抢购</h2> 
+     @if($first)
+          @if($first->activity == 3)
+        <h2 id='dtime'>10<h2>
+         @endif
+     @endif
+     
+      @foreach($timerob as $time) 
+      
+     <div class="col-md-3 men"> 
+        <a href="{{URL('/home/single')}}/{{ $time->id }}/edit" class="b-link-stripe b-animate-go  thickbox">
+            <img class="img-responsive" src="{{ URL('/uploads') }}/{{ $time->image }}" alt="请等待" style="width:355px;height:280px;" /> 
+           <div class="b-wrapper"> 
+            <h3 class="b-animate b-from-top top-in   b-delay03 "> 
+              <span>{{ $time->proname }}</span> 
+            </h3> 
+           </div> 
+       </a> 
+       <center><h3 style="color:red;" class="ing">抢购中</h3></center>
+     </div>
+     @endforeach
+     
      <div class="clearfix"> 
      </div> 
     </div> 
@@ -333,12 +320,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
    <!-- 友情链接 --> 
    <div class="content-bottom"> 
     <ul> 
-     <li><a href="#"><img class="img-responsive" src="./homes/images/lo.png" alt="" /></a></li> 
-     <li><a href="#"><img class="img-responsive" src="./homes/images/lo1.png" alt="" /></a></li> 
-     <li><a href="#"><img class="img-responsive" src="./homes/images/lo2.png" alt="" /></a></li> 
-     <li><a href="#"><img class="img-responsive" src="./homes/images/lo3.png" alt="" /></a></li> 
-     <li><a href="#"><img class="img-responsive" src="./homes/images/lo4.png" alt="" /></a></li> 
-     <li><a href="#"><img class="img-responsive" src="./homes/images/lo5.png" alt="" /></a></li> 
+      @foreach($data as $dataValue)
+        <li><a href="{{ $dataValue->url }}"><img class="img-responsive" src="{{ URL('/uploads') }}/{{ $dataValue->image }}" alt="品牌" title="链接"/></a></li>
+      @endforeach
+     <!-- <li><a href="#"><img class="img-responsive" src="./homes/images/lo.png" alt="" /></a></li> -->
+     
      <div class="clearfix"> 
      </div> 
     </ul> 
@@ -367,7 +353,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
      <div class="col-md-4 amet-sed "> 
       <h4>CONTACT US</h4> 
       <p> Contrary to popular belief</p> 
-      <p>The standard chunk</p> 
+      <p>The standard chunk</p>  
       <p>office: +12 34 995 0792</p> 
       <ul class="social"> 
        <li><a href="#"><i> </i></a></li> 
@@ -430,8 +416,40 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
           if(w == 0){
               w = '日';
           }
-          var info = Y+'-'+m+'-'+d+'　'+H+':'+i+':'+s+'　周'+w;
+          var info = Y+'-'+(m+1)+'-'+d+'　'+H+':'+i+':'+s+'　周'+w;
           tid.innerHTML = info;
       },1000);
+
+      $('.lid').mouseover(function(){
+        alert(222);
+      });
+        
+
+       // 做个倒计时
+          var dtime = document.getElementById('dtime');
+          
+          mytime =  setInterval(function(){
+             var dtimee= parseInt(dtime.innerHTML);
+              var date = new Date();
+
+               dtime.innerHTML = dtimee -1;
+              if(dtime.innerHTML <= 0){
+                  clearInterval(mytime);
+                  $('.ing').html('时间到了');
+                  $('.ing').css('color','black');
+              }
+          },1000);
+
+          
+      
+            
+          
+          
+            
  </script>
+
+  
+
+ 
+
 </html>

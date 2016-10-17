@@ -2,25 +2,27 @@
 <html>
  <head> 
   <title>购物车</title> 
-  <link href="../../homes/css/bootstrap.css" rel="stylesheet" type="text/css" media="all" /> 
+  <link href="{{ asset('/homes/css/bootstrap.css') }}" rel="stylesheet" type="text/css" media="all" /> 
   <!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
-  <script src="../../homes/js/jquery.min.js"></script> 
+  <script src="{{ asset('/homes/js/jquery.min.js') }}"></script> 
+  <script src="{{ asset('/homes/js/jquery-1.8.3.min.js') }}"></script> 
   <!-- Custom Theme files --> 
   <!--theme-style--> 
-  <link href="../../homes/css/style.css" rel="stylesheet" type="text/css" media="all" /> 
+  <link href="{{ asset('/homes/css/style.css') }}" rel="stylesheet" type="text/css" media="all" /> 
   <!--//theme-style--> 
   <meta name="viewport" content="width=device-width, initial-scale=1" /> 
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
   <meta name="keywords" content="New Store Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template, 
 Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" /> 
   <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script> 
+   <script src="{{ asset('/homes/js/jquery-1.8.3.min.js') }}"></script> 
   <!--fonts--> 
   <!--//fonts--> 
   <!-- start menu --> 
-  <link href="../../homes/css/memenu.css" rel="stylesheet" type="text/css" media="all" /> 
-  <script type="text/javascript" src="../../homes/js/memenu.js"></script> 
+  <link href="{{ asset('/homes/css/memenu.css') }}" rel="stylesheet" type="text/css" media="all" /> 
+  <script type="text/javascript" src="{{ asset('/homes/js/memenu.js') }}"></script> 
   <script>$(document).ready(function(){$(".memenu").memenu();});</script> 
-  <script src="../../homes/js/simpleCart.min.js"> </script> 
+  <script src="{{ asset('/homes/js/simpleCart.min.js') }}"> </script> 
  </head> 
  <body> 
   <!--header--> 
@@ -34,18 +36,24 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
       </form> 
      </div> 
      <div class="header-left"> 
-      <ul> 
-       <li><a class="lock" href="{{URL('/home/login')}}">登录</a></li> 
-       <li><a class="lock" href="{{URL('/home/register')}}">注册</a></li> 
-       <li> </li> 
-      </ul> 
+        @if(session('homeuser'))
+    <ul>
+      <li><a href="{{URL('/home/register')}}">欢迎 {{ session('homeuser') }} 的光临</a></li> 
+      <li><a href="{{URL('/home/logout')}}">退出</a></li>
+    </ul>
+  @else
+    <ul>
+      <li><a href="{{URL('/home/login')}}">登录</a></li> 
+      <li><a href="{{URL('/home/register')}}">注册</a></li> 
+    </ul>
+  @endif 
       <div class="cart box_1"> 
        <a href="{{URL('/home/checkout')}}"> <h3> 
          <div class="total"> 
           <span class="simpleCart_total"></span> (
           <span id="simpleCart_quantity" class="simpleCart_quantity"></span> items)
          </div> <img src="../../homes/images/cart.png" alt="" /></h3> </a> 
-       <p><a href="javascript:void(0)" class="simpleCart_empty">显示用户名</a></p> 
+      
       </div> 
       <div class="clearfix"> 
       </div> 
@@ -55,227 +63,152 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     </div> 
    </div> 
    <div class="container"> 
-    <div class="head-top"> 
-     <div class="logo"> 
-      <a href="{{URL('/')}}"><img src="../../homes/images/logo.png" alt="" /></a> 
+    <div class="logo"> 
+      <a href="{{URL('/')}}"><img src="{{ asset('/homes/images/logo.png') }}" alt="" /></a> 
      </div> 
-     <div class=" h_menu4"> 
-      <ul class="memenu skyblue"> 
-       <li class="active grid"><a class="color8" href="{{URL('/')}}">主页</a></li> 
-       <li><a class="color1" href="javascript:void(0)">分类</a> 
-        <div class="mepanel"> 
-         <div class="row"> 
-          <div class="col1"> 
-           <div class="h_nav"> 
-            <ul> 
-             <li><a href="{{URL('/home/products')}}">商品列表</a></li> 
-             <li><a href="products.html">Bags</a></li> 
-             <li><a href="products.html">Caps &amp; Hats</a></li> 
-             <li><a href="products.html">Hoodies &amp; Sweatshirts</a></li> 
-             <li><a href="products.html">Jackets &amp; Coats</a></li> 
-             <li><a href="products.html">Jeans</a></li> 
-             <li><a href="products.html">Jewellery</a></li> 
-             <li><a href="products.html">Jumpers &amp; Cardigans</a></li> 
-             <li><a href="products.html">Leather Jackets</a></li> 
-             <li><a href="products.html">Long Sleeve T-Shirts</a></li> 
-             <li><a href="products.html">Loungewear</a></li> 
-            </ul> 
-           </div> 
-          </div> 
-          <div class="col1"> 
-           <div class="h_nav"> 
-            <ul> 
-             <li><a href="{{URL('/home/products')}}">Shirts</a></li> 
-             <li><a href="products.html">Shoes, Boots &amp; Trainers</a></li> 
-             <li><a href="products.html">Shorts</a></li> 
-             <li><a href="products.html">Suits &amp; Blazers</a></li> 
-             <li><a href="products.html">Sunglasses</a></li> 
-             <li><a href="products.html">Sweatpants</a></li> 
-             <li><a href="products.html">Swimwear</a></li> 
-             <li><a href="products.html">Trousers &amp; Chinos</a></li> 
-             <li><a href="products.html">T-Shirts</a></li> 
-             <li><a href="products.html">Underwear &amp; Socks</a></li> 
-             <li><a href="products.html">Vests</a></li> 
-            </ul> 
-           </div> 
-          </div> 
-          <div class="col1"> 
-           <div class="h_nav"> 
-            <h4>Popular Brands</h4> 
-            <ul> 
-             <li><a href="{{URL('/home/products')}}">Levis</a></li> 
-             <li><a href="products.html">Persol</a></li> 
-             <li><a href="products.html">Nike</a></li> 
-             <li><a href="products.html">Edwin</a></li> 
-             <li><a href="products.html">New Balance</a></li> 
-             <li><a href="products.html">Jack &amp; Jones</a></li> 
-             <li><a href="products.html">Paul Smith</a></li> 
-             <li><a href="products.html">Ray-Ban</a></li> 
-             <li><a href="products.html">Wood Wood</a></li> 
-            </ul> 
-           </div> 
-          </div> 
-         </div> 
-        </div> </li> 
-       <li class="grid"><a class="color2" href="javascript:void(0)"> Lookbook</a> 
-        <div class="mepanel"> 
-         <div class="row"> 
-          <div class="col1"> 
-           <div class="h_nav"> 
-            <ul> 
-             <li><a href="{{URL('/home/products')}}">Accessories</a></li> 
-             <li><a href="products.html">Bags</a></li> 
-             <li><a href="products.html">Caps &amp; Hats</a></li> 
-             <li><a href="products.html">Hoodies &amp; Sweatshirts</a></li> 
-             <li><a href="products.html">Jackets &amp; Coats</a></li> 
-             <li><a href="products.html">Jeans</a></li> 
-             <li><a href="products.html">Jewellery</a></li> 
-             <li><a href="products.html">Jumpers &amp; Cardigans</a></li> 
-             <li><a href="products.html">Leather Jackets</a></li> 
-             <li><a href="products.html">Long Sleeve T-Shirts</a></li> 
-             <li><a href="products.html">Loungewear</a></li> 
-            </ul> 
-           </div> 
-          </div> 
-          <div class="col1"> 
-           <div class="h_nav"> 
-            <ul> 
-             <li><a href="{{URL('/home/products')}}">Shirts</a></li> 
-             <li><a href="products.html">Shoes, Boots &amp; Trainers</a></li> 
-             <li><a href="products.html">Shorts</a></li> 
-             <li><a href="products.html">Suits &amp; Blazers</a></li> 
-             <li><a href="products.html">Sunglasses</a></li> 
-             <li><a href="products.html">Sweatpants</a></li> 
-             <li><a href="products.html">Swimwear</a></li> 
-             <li><a href="products.html">Trousers &amp; Chinos</a></li> 
-             <li><a href="products.html">T-Shirts</a></li> 
-             <li><a href="products.html">Underwear &amp; Socks</a></li> 
-             <li><a href="products.html">Vests</a></li> 
-            </ul> 
-           </div> 
-          </div> 
-          <div class="col1"> 
-           <div class="h_nav"> 
-            <h4>Popular Brands</h4> 
-            <ul> 
-             <li><a href="{{URL('/home/products')}}">Levis</a></li> 
-             <li><a href="products.html">Persol</a></li> 
-             <li><a href="products.html">Nike</a></li> 
-             <li><a href="products.html">Edwin</a></li> 
-             <li><a href="products.html">New Balance</a></li> 
-             <li><a href="products.html">Jack &amp; Jones</a></li> 
-             <li><a href="products.html">Paul Smith</a></li> 
-             <li><a href="products.html">Ray-Ban</a></li> 
-             <li><a href="products.html">Wood Wood</a></li> 
-            </ul> 
-           </div> 
-          </div> 
-         </div> 
-        </div> </li> 
-       <li><a class="color4" href="{{URL('/home/blog')}}">博客</a></li> 
-       <li><a class="color6" href="{{URL('/home/contact')}}">联系</a></li> 
-      </ul> 
-     </div> 
-     <div class="clearfix"> 
-     </div> 
-    </div> 
+    
    </div> 
   </div> 
   <div class="container"> 
    <div class="check"> 
+
     <h1>我的购物清单</h1> 
-    <div class="col-md-9 cart-items"> 
+    <!-- 测试 -->
+    <!-- 结款 -->
+     <!-- <form action="" method='post' name='payment'>
+        <input type='hidden' name="_token" value="{{ csrf_token() }}">
+        <input type='hidden' name="_method" value="put">
+     </form> -->
+     <!-- 结款结束 -->
+     <!-- 删除 -->
+        <form action="" method='post' display = 'none' name='myform'>
+            <input type='hidden' name='_token' value="{{ csrf_token() }}">
+            <input type='hidden' name='_method' value="delete">
+         </form>
+         <!-- 删除 -->
+    <!-- form测试 -->
+    <form action="" method='post' name='payment'>
+        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+        <input type="hidden" name="_method" value="put">
+         @foreach($list as $data)
+    <div>
+
+        <div class="col-md-9 cart-items"> 
      <script>$(document).ready(function(c) {
-					$('.close1').on('click', function(c){
-						$('.cart-header').fadeOut('slow', function(c){
-							$('.cart-header').remove();
-						});
-						});	  
-					});
-			   </script> 
+          $('.close1').on('click', function(c){
+            $('.cart-header').fadeOut('slow', function(c){
+              $('.cart-header2').remove();
+            });
+            });   
+          });
+         </script> 
      <div class="cart-header"> 
-      <div class="close1"> 
-      </div> 
+      <!-- <div  id='close'>   -->
+         <!-- 删除按钮  -->
+         
+         <a href="javascript:doDel({{ $data->cid }})" class="close1" id='close'></a>
+         <script type="text/javascript">
+              function doDel(id){
+                  var form = document.myform;
+                  form.action = "{{ URL('/home/checkout') }}/"+id;
+                  form.submit();
+              }
+         </script>
+      <!-- </div>  -->
+      <script type="text/javascript">
+          $('#close').click(function(){
+            // alert(1); 
+          });
+      </script>
+       <!-- 显示内容  -->
+      <input type='checkbox' name='xz'>
       <div class="cart-sec simpleCart_shelfItem"> 
        <div class="cart-item cyc"> 
-        <img src="../../homes/images/pic1.jpg" class="img-responsive" alt="" /> 
+        <img src="{{ asset('/uploads') }}/{{ $data->image }}" class="img-responsive" alt="请等待" style='width:200px;height:200px;'/> 
        </div> 
+
        <div class="cart-item-info"> 
-        <!-- 跳到商品详情 --> 
-        <h3><a href="#">商品名(XS R034)</a><span>商品id: 3578</span></h3> 
+
+        <!-- 跳到商品详情  -->
+        <h3><a href="{{ URL('/home/single') }}/{{ $data->ggid }}/edit"><span style="color:red;font-size:20px;">商品名({{ $data->proname }})</span></a><span>商品id:{{ $data->ggid }} </span></h3> 
+
         <ul class="qty"> 
-         <li><p>Size : 5</p></li> 
-         <li><p>Qty : 1</p></li> 
+         <li><p>尺寸 : {{ $data->size }}</p></li> 
+         <li><p>颜色 : {{ $data->color }}</p></li> 
         </ul> 
         <div class="delivery"> 
-         <p>Service Charges : Rs.100.00</p> 
-         <span>??快递状态</span> 
+          <p style="color:red;">购物车ID : {{ $data->cid }}</p><br>
+         <p>{{ $data->descript }}</p> 
+         <!-- <span>??快递状态</span>  -->
          <div class="clearfix"></div> 
         </div> 
        </div> 
        <div class="clearfix"></div> 
       </div> 
+      
+     <!-- 显示内容结束  -->
      </div> 
      <script>$(document).ready(function(c) {
-					$('.close2').on('click', function(c){
-							$('.cart-header2').fadeOut('slow', function(c){
-						$('.cart-header2').remove();
-					});
-					});	  
-					});
-			 </script> 
-     <div class="cart-header2"> 
-      <div class="close2"> 
-      </div> 
-      <div class="cart-sec simpleCart_shelfItem"> 
-       <div class="cart-item cyc"> 
-        <img src="../../homes/images/pic2.jpg" class="img-responsive" alt="" /> 
-       </div> 
-       <div class="cart-item-info"> 
-        <h3><a href="#">商品名(XS R034)</a><span>商品id: 3578</span></h3> 
-        <ul class="qty"> 
-         <li><p>Size : 5</p></li> 
-         <li><p>Qty : 1</p></li> 
-        </ul> 
-        <div class="delivery"> 
-         <p>Service Charges : Rs.100.00</p> 
-         <span>到货时间??</span> 
-         <div class="clearfix"></div> 
-        </div> 
-       </div> 
-       <div class="clearfix"></div> 
-      </div> 
-     </div> 
+          $('.close2').on('click', function(c){
+              $('.cart-header2').fadeOut('slow', function(c){
+            $('.cart-header2').remove();
+          });
+          });   
+          });
+       </script> 
+     
     </div> 
     <div class="col-md-3 cart-total"> 
      <!-- 跳到支付页面 --> 
-     <a class="continue" href="#">结款</a> 
+     
+     <a class="continue" href="javascript:payment({{ $data->cid }})">结款</a> 
+     <script type="text/javascript">
+           // 结款
+        function payment(cid)
+        {
+            var forme = document.payment;
+            // alert(cid);
+            forme.action = "{{ URL('/home/checkout') }}/"+cid;
+           // alert(cid);
+            forme.submit(); 
+        }
+     </script>
      <div class="price-details"> 
       <h3>商品信息</h3> 
-      <span>总价格</span> 
-      <span class="total1">6200.00</span> 
+      <span>总价格(元)</span> 
+      <span class="total1" style="font-size:18px;"><span id="totalPrice{{ $data->gid }}">{{ $data->totalprice }}</span></span> 
       <span>数量[]</span> 
-      <span class="total1">---</span> 
-      <span>单价</span> 
-      <span class="total1">150.00</span> 
+      <span class="total1">
+       <!-- 加减运算 -->
+        <a href="javascript:void(0)" style="width:30px;float:left;font-size:30px;text-decoration:none;" class='reduce' onclick="reduce({{ $data->gid }})">-</a>
+            <input type='text' name='nums{{ $data->gid }}' id="num{{ $data->gid }}" style="float:left;width:50px;" value="1">
+        <a href="javascript:void(0)" style="width:30px;float:left;font-size:30px;text-decoration:none;" class='plus' onclick="plus({{ $data->gid }})">+</a>
+        <!-- 加减运算 -->
+      </span> 
+      <span>单价(元)</span> 
+      <span class="total1" style="font-size:18px;"><span id='price{{ $data->gid }}'>{{ $data->price }}</span></span> 
       <div class="clearfix"></div> 
      </div> 
      <ul class="total_price"> 
-      <li class="last_price"> <h4>总金额</h4></li> 
-      <li class="last_price"><span>6350.00</span></li> 
+      <li class="last_price" > <h4>总金额(元)</h4></li> 
+      <li class="last_price" ><span id='money{{ $data->gid }}'>{{ $data->price }}</span></li> 
       <div class="clearfix"> 
       </div> 
      </ul> 
      <div class="clearfix"></div> 
-     <a class="order" href="#">结款</a> 
-     <div class="total-item"> 
-      <!-- 优惠卷 --> 
-      <h3>快把我领回家</h3> 
-      <h4>欢迎下次购买</h4> 
-      <a class="cpns" href="#">全部结款</a> 
-      <p><a href="#">Log In</a> to use accounts - linked coupons</p> 
-     </div> 
-    </div> 
+    
+    </div>
+    <!-- 结束 -->
+    </div>
+
+    @endforeach
+      <input type='submit' value='全部提交' style='float:left;width:200px;height:40px;background-color:orange;'>
+    </form>
+     <!-- form 测试 结束-->
+   
+    <!-- 测试 -->
+   
+     
     <div class="clearfix"> 
     </div> 
    </div> 
@@ -321,6 +254,91 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
    <div class="footer-class"> 
     <p>Team&copy; 2016.Just tonight do it. <a href="#" target="_blank" title="三人行">三人行</a> - Motto <a href="#" title="三人行" target="_blank">必有我师焉</a></p> 
    </div> 
-  </div>   
+  </div>
+ 
  </body>
+  <script type="text/javascript">
+/**********************************************************/
+  
+    
+    /***************************************************/
+    //减
+    function reduce(gid)
+    {
+      // 拿取input数量
+      
+       var num = document.getElementById('num'+gid);    //数量 
+
+       var price = document.getElementById('price'+gid);   //单价
+
+       var totalPrice = document.getElementById('totalPrice'+gid);   //总价
+       var money = document.getElementById('money'+gid);   // 总金额
+
+       // 将数量转型
+       
+       var inta = parseInt(num.value);
+       // alert(inta);
+       num.value = inta -1;
+
+        if(num.value <= 1){
+           num.value = 1;
+        }
+         // 单价
+
+          var a = parseInt(price.innerHTML);
+          
+          var b = parseInt(num.value);
+          var total = (a*b);
+          // alert(total);
+          // 总价
+          // var ob = $('#totalPrice1');
+
+          // ob.html(total);
+          totalPrice.innerHTML = total;
+          // var bo = $('#money1');
+          money.innerHTML = total;
+          // bo.html(total);
+       // alert(inta);
+       // num.val(inta -1);
+
+       // alert(gid);
+
+    }
+    // 加
+    function plus(gid)
+    {
+     // 拿取input数量
+       // var num = $(this).next();
+       var num = document.getElementById('num'+gid);    //数量 
+
+       var price = document.getElementById('price'+gid);   //单价
+
+       var totalPrice = document.getElementById('totalPrice'+gid);   //总价
+       var money = document.getElementById('money'+gid);   // 总金额
+
+       // 将数量转型
+       var inta = parseInt(num.value);
+       // alert(inta);
+       num.value = inta +1;
+
+       
+         // 单价
+
+          var a = parseInt(price.innerHTML);
+          
+          var b = parseInt(num.value);
+          var total = (a*b);
+          // alert(total);
+          // 总价
+          // var ob = $('#totalPrice1');
+
+          // ob.html(total);
+          totalPrice.innerHTML = total;
+          // var bo = $('#money1');
+          money.innerHTML = total;
+    }
+        
+       
+   
+  </script>   
 </html>

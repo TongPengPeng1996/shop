@@ -48,16 +48,28 @@
 	<input runat="server" id="divScrollValue" type="hidden" value="" />
 	<div class="menu_dropdown bk_2">
 		<dl id="menu-member">
-			<dt><i class="Hui-iconfont">&#xe60d;</i> 会员管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+			<dt><i class="Hui-iconfont">&#xe60d;</i> 镇店之宝<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
-					<li><a _href="" href="{{URL('/admin/user/user-list')}}">会员列表</a></li>
-					<!-- <li><a _href="member-del.html" href="javascript:;">删除的会员</a></li> -->
-					<!-- <li><a _href="member-level.html" href="javascript:;">等级管理</a></li> -->
-					<!-- <li><a _href="member-scoreoperation.html" href="javascript:;">积分管理</a></li> -->
-					<!-- <li><a _href="member-record-browse.html" href="javascript:void(0)">浏览记录</a></li> -->
-					<!-- <li><a _href="member-record-download.html" href="javascript:void(0)">下载记录</a></li> -->
-					<li><a _href="" href="{{ URL('/admin/user/adduser') }}">添加用户</a></li>
+					<li><a _href="" href="{{ URL('/admin/introduce') }}">非卖品</a></li>
+				</ul>
+			</dd>
+		</dl>
+
+
+		<dl id="menu-member">
+			<dt><i class="Hui-iconfont">&#xe60d;</i> 活动<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+			<dd>
+				<ul>
+					<li><a _href="" href="{{ URL('/admin/recommend') }}">商品推荐</a></li>
+					<li><a _href="" href="{{ URL('/admin/timerob') }}">限时抢购</a></li>
+
+					<!-- <li><a _href="member-del.html" href="javas商品推荐cript:;">删除的会员</a></li>
+					<li><a _href="member-level.html" href="javascript:;">等级管理</a></li>
+					<li><a _href="member-scoreoperation.html" href="javascript:;">积分管理</a></li>
+					<li><a _href="member-record-browse.html" href="javascript:void(0)">浏览记录</a></li>
+					<li><a _href="member-record-download.html" href="javascript:void(0)">下载记录</a></li>
+					<li><a _href="" href="{{ URL('/admin/user/adduser') }}">添加用户</a></li> -->
 				</ul>
 			</dd>
 		</dl>
@@ -94,14 +106,15 @@
 			</dt>
 			<dd>
 				<ul>
-					<!-- <li><a _href="product-brand.html" href="javascript:void(0)">品牌管理</a></li> -->
-					<!-- <li><a _href="" href="{{ URL('/admin/goods/product-categorys') }}">分类管理</a></li> -->
+					
 					<li><a _href="" href="{{ URL('/admin/goods/commodity-list') }}">商品管理</a></li>
 					<li><a _href="" href="{{ URL('/admin/goods/goods-detail') }}">商品详情</a></li>
 					<li><a _href="" href="{{ URL('/admin/goods/recycle') }}">下架商品</a></li>
 				</ul>
 			</dd>
 		</dl>
+
+
 		<dl id="menu-product">
 			<dt>
 				<i class="Hui-iconfont">&#xe620;</i> 分类中心
@@ -109,7 +122,7 @@
 			</dt>
 			<dd>
 				<ul>
-					<!-- <li><a _href="product-brand.html" href="javascript:void(0)">品牌管理</a></li> -->
+					<li><a _href="" href="{{ URL('/admin/categorys') }}/create">添加顶级分类</a></li>
 					<li><a _href="" href="{{ URL('/admin/goods/product-categorys') }}">分类管理</a></li>
 					
 				</ul>
@@ -148,17 +161,41 @@
 				</ul>
 			</dd>
 		</dl> -->
-		<dl id="menu-order">
+		<!-- 张鹏宇 -->
+		<!-- <dl id="menu-order">
 			<dt><i class="Hui-iconfont">&#xe63a;</i> 订单中心<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
+					<li><a _href="order-list.html" href="javascript:void(0)">订单列表</a></li>
+					<li><a href="{{ URL('/admin/order/orders-list') }}">订单管理</a></li>
+					<li><a _href="invoice-list.html" href="javascript:void(0)">发票管理</a></li>
+				</ul>
+			</dd>
+		</dl> -->
+		
+		<dl id="menu-order">
+			<dt><i class="Hui-iconfont">&#xe63a;</i> 地址管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+			<dd>
+				<ul>
 					<!-- <li><a _href="order-list.html" href="javascript:void(0)">订单列表</a></li> -->
-					<li><a _href="" href="{{ URL('/admin/order/orders-list') }}">订单管理</a></li>
-					<!-- <li><a _href="invoice-list.html" href="javascript:void(0)">发票管理</a></li> -->
+					<li><a href="{{ URL('/admin/address/address') }}" >地址详情</a></li>
 				</ul>
 			</dd>
 		</dl>
-		
+
+		<dl id="menu-admin">
+			<dt>
+				<i class="Hui-iconfont">&#xe62d;</i> 系统管理
+				<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
+			</dt>
+			<dd>
+				<ul>
+					<li><a href="{{ URL('/admin/shop-help/shop-help') }}">商城帮助</a></li>
+					
+				</ul>
+			</dd>
+		</dl>
+		<!-- 张鹏宇 -->
 		<!-- <dl id="menu-admin">
 			<dt>
 				<i class="Hui-iconfont">&#xe62d;</i> 管理员管理

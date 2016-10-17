@@ -57,10 +57,17 @@ catch (e) {
       </form> 
      </div> 
      <div class="header-left"> 
-      <ul> 
-       <li><a href="{{URL('/home/login')}}">登录</a></li> 
-       <li><a href="{{URL('/home/register')}}">注册</a></li> 
-      </ul> 
+        @if(session('homeuser'))
+    <ul>
+      <li><a href="{{URL('/home/register')}}">欢迎 {{ session('homeuser') }} 的光临</a></li> 
+      <li><a href="{{URL('/home/logout')}}">退出</a></li>
+    </ul>
+  @else
+    <ul>
+      <li><a href="{{URL('/home/login')}}">登录</a></li> 
+      <li><a href="{{URL('/home/register')}}">注册</a></li> 
+    </ul>
+  @endif
       <div class="cart box_1"> 
        <a href="{{URL('/home/checkout')}}"> <h3> 
          <div class="total"> 
@@ -68,7 +75,6 @@ catch (e) {
           <span id="simpleCart_quantity" class="simpleCart_quantity"></span> items) 
          </div> <img src="{{ asset('/homes/images/cart.png') }}" alt="" /></h3> </a> 
        <!-- 123213123123123123 --> 
-       <p><a href="{{URL('/home/passwd')}}" class="simpleCart_empty">显示用户名</a></p> 
       </div> 
       <div class="clearfix"> 
       </div> 

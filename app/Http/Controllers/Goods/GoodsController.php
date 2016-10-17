@@ -11,15 +11,34 @@ use Intervention\Image\ImageManagerStatic as Image; //使用第三方扩展实�
 class GoodsController extends Controller
 {
     //显示主页
-    public function index()
+    public function index(Request $request)
     {
     	// $list = \DB::table('shop_goods')->get();
-        $db = \DB::table('shop_goods');
-        $list = \DB::select("select *,shop_categorys.id,shop_goods.id as gid from shop_categorys,shop_goods where shop_goods.cateid = shop_categorys.id and shop_goods.state != 3");
+        
+        // $db = \DB::table('shop_goods');
+        // $list = \DB::select("select *,shop_categorys.id,shop_goods.id as gid from shop_categorys,shop_goods where shop_goods.cateid = shop_categorys.id and shop_goods.state != 3");
         // $list = $db->paginate(1);
         // dd($list);
-        $count = \DB::select('select count(*) as num from shop_goods where state != 3');
-        $num = $count[0]->num;
+
+        $list= \DB::table('shop_categorys')
+                    ->join('shop_goods','shop_goods.cateid','=','shop_categorys.id')
+                    ->select('shop_categorys.*','shop_goods.*')
+                    ->where('shop_goods.state','!=','3')
+                    ->orderBy('shop_goods.id')
+                    ->Paginate(2);
+
+        // $where = [];    //将搜索条件 保存至数组   
+        // if($request->has('name')){
+        //     $name=$request->input('name');
+        //     // dd($name);
+        //     $list->where('shop_goods.proname','like',"%{$name}%");
+        //     $where['name']=$name;
+        //     // dd($where); 
+        // }
+
+        // dd($list);
+        $num = count($list);
+        
         // dd($num);
     	return view('/admin/goods/commodity-list',['list'=>$list,'num'=>$num]);
     }
@@ -50,7 +69,7 @@ class GoodsController extends Controller
 
         $data = $request->only('proname','state','price','store','descript','image','addtime');
         // dd($data);
-        // 团片上传
+        // 图片上传
         $file = $request->file('image');
         // dd($file);
         if($file->isValid()){

@@ -73,10 +73,17 @@ catch (e) {
       </form> 
      </div> 
      <div class="header-left"> 
-      <ul> 
-       <li><a href="{{URL('/home/login')}}">登录</a></li> 
-       <li><a href="{{URL('/home/register')}}">注册</a></li> 
-      </ul> 
+      @if(session('homeuser'))
+    <ul>
+      <li><a href="{{URL('/home/register')}}">欢迎 {{ session('homeuser') }} 的光临</a></li> 
+      <li><a href="{{URL('/home/logout')}}">退出</a></li>
+    </ul>
+  @else
+    <ul>
+      <li><a href="{{URL('/home/login')}}">登录</a></li> 
+      <li><a href="{{URL('/home/register')}}">注册</a></li> 
+    </ul>
+  @endif
       <div class="cart box_1"> 
        <a href="{{URL('/home/checkout')}}"> <h3> 
          <div class="total"> 
@@ -84,7 +91,6 @@ catch (e) {
           <span id="simpleCart_quantity" class="simpleCart_quantity"></span> items)
          </div> <img src="{{ asset('/homes/images/cart.png') }}" alt="" /></h3> </a> 
          <!-- 123213123123123123 -->
-       <p><a href="{{URL('/home/passwd')}}" class="simpleCart_empty">显示用户名</a></p> 
       </div>
       <div class="clearfix"> 
       </div> 
@@ -169,19 +175,26 @@ catch (e) {
                     
 										<div class="OrderProInfo">
       <div class="OrderProInfoCon">
+        <!-- 张鹏宇 -->
+             <form action="" method="post" name="myform">
+                <input type="hidden" name="_token" value="{{ csrf_token()}}">
+                <input type="hidden" name="_method" value="delete">
+             </form>
+         
+        <!--  张鹏宇 -->
             <table id="shippingTable" class="shippingTable" border="0" cellpadding="10" cellspacing="0" width="100%">
                 <tbody>
                   <tr>
                     <th style="background:#fcf8e2; height:auto;" width="5%">&nbsp;</th>
                     <th style="background:#fcf8e2; height:auto;" width="25%">收货人</th>
-                    <th style="background:#fcf8e2; height:auto;">所在地</th>
+                    <!-- <th style="background:#fcf8e2; height:auto;">所在地</th> -->
                     <th style="background:#fcf8e2; height:auto;" width="15%">详细地址</th>
-                    <th style="background:#fcf8e2; height:auto;" width="15%">邮编</th>
+                    <!-- <th style="background:#fcf8e2; height:auto;" width="15%">邮编</th> -->
                     <th style="background:#fcf8e2; height:auto;" width="15%">电话/手机</th>
                     <th style="background:#fcf8e2; height:auto;" width="15%">操作</th>
 
                   </tr>
-                  <tr>
+                  <!-- <tr>
                     <td class="weiruan " bgcolor="#ffffff"><input name="shipping" value="3" supportcod="1" insure="0" onclick="selectShipping(this)" type="radio">
                     </td>
                     <td class="weiruan " bgcolor="#ffffff"><strong>张三</strong></td>
@@ -191,8 +204,25 @@ catch (e) {
                     <td class="weiruan " align="center" bgcolor="#ffffff">13888888888</td>
                     <td class="weiruan " align="center" bgcolor="#ffffff"><a href="#">修改</a>|<a href="#">删除</a>|设为默认</td>
 
-                  </tr>
-              
+                  </tr> -->
+
+                  <!-- 张鹏宇 -->
+                   @foreach($list as $v)
+                        <tr>
+                            <td class="weiruan " bgcolor="#ffffff"><span></span>
+                            </td>
+                            <td class="weiruan " bgcolor="#ffffff"><strong>{{ $v->name }}</strong></td>
+                            <td class="weiruan " align="center" bgcolor="#ffffff"><span>{{ $v->ReceiptAddress }}</span></td>
+                            <td class="weiruan " align="center" bgcolor="#ffffff">{{ $v->Telephone }}</td>
+                            <td class="weiruan " align="center" bgcolor="#ffffff"><a href="{{ URL('/home/adjust') }}/{{ $v->id }}/edit">修改</a>|<a href="javascript:doDel({{ $v->id }});">删除</a></td>
+                  
+                        </tr>
+
+                  
+                   @endforeach
+
+                  <!-- 张鹏宇结束 -->
+
                 </tbody>
             </table>
     </div>
@@ -273,13 +303,27 @@ catch (e) {
     <p>Team&copy; 2016.Just tonight do it.<a href="#" target="_blank" title="三人行">三人行</a> - Motto <a href="#" title="三人行" target="_blank">必有我师焉</a></p> 
    </div> 
   </div>
-asdasdasdasdasddsaasdasd
+
 </div>
 
 <script type="text/javascript">
 var msg_title_empty = "留言标题为空";
 var msg_content_empty = "留言内容为空";
 var msg_title_limit = "留言标题不能超过200个字";
+
+//删除标题
+  function doDel(id){
+    if(confirm('确定删除吗?')){
+        // alert(id);
+        //1 获得form表单节点对象
+        var myform = document.myform;
+        //2 设置提交方式 
+        myform.action = "/home/adjust/"+id;//提交地址 
+        myform.submit();//执行表单提交
+      }
+  }
+
+
 </script>
 
 </body></html>

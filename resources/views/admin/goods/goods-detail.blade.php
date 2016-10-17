@@ -11,17 +11,26 @@
 <meta http-equiv="Cache-Control" content="no-siteapp" />
 <link href="{{ asset('/admins/css/H-ui.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('/admins/css/H-ui.admin.css') }}" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" href="{{ asset('/admins/css/bootstrap.min.css') }}">
 <link href="{{ asset('/admins/lib/Hui-iconfont/1.0.1/iconfont.css') }}" rel="stylesheet" type="text/css" />
 <title>商品管理</title>
 </head>
 <body>
 <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i><a href="{{ URL('/admin') }}"> 首页</a> 
-
+<span class="r">本页共有数据：<strong style="color:red;">{{ $num }}</strong> 条</span>
 <span class="c-gray en">&gt;</span> <a href="{{ URL('/admin/goods/commodity-list') }}">商品列表</a> </nav>
 <div class="pd-20">
 
 	
 	<div class="mt-20">
+		<center>
+			<form action="{{ URL('/admin/goods/goods-detail') }}" class="form-inline" >
+					<input type="hidden" name="_token" value="{{ csrf_token()}}">
+				搜索 <input type="text" name="name" size="30" class="form-control">
+					<input type="submit" class="btn btn-primary">
+			</form>
+		</center>
+		<br>
 		<form action='' method='post' name='myform'>
 			<input type='hidden' name='_token' value="{{ csrf_token() }}">
 			<input type='hidden' name='_method' value="delete">
@@ -61,7 +70,7 @@
 			@endforeach
 		</tbody>
 	</table>
-
+	<center>{!! $list->appends($where)->render(); !!}</center>	
 	</div>
 </div> 
 </body>

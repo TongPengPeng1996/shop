@@ -12,6 +12,7 @@
 <link href="{{ asset('/admins/css/H-ui.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('/admins/css/H-ui.admin.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('/admins/lib/Hui-iconfont/1.0.1/iconfont.css') }}" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" href="{{ asset('/admins/css/bootstrap.min.css') }}">
 <title>商品管理</title>
 </head>
 <body>
@@ -26,7 +27,7 @@
 		/admin/goods/product-add') }}">
 		<i class="Hui-iconfont">&#xe600;</i> 添加商品</a> 
 		<a class="btn btn-primary radius" onclick="article_add('添加资讯','article-add.html')" href="{{  URL('/admin/goods/type') }}"><i class="Hui-iconfont">&#xe600;</i> 添加分类</a> 
-	</span> <span class="r">共有数据：<strong>{{ $num }}</strong> 条</span> </div>
+	</span> <span class="r">本页共有数据：<strong>{{ $num }}</strong> 条</span> </div>
 	<div class="mt-20">
 		<form action='' method='post' name='myform'>
 			<input type='hidden' name='_token' value="{{ csrf_token() }}">
@@ -54,7 +55,7 @@
 			@foreach($list as $value)
 			<tr class="text-c">
 				<td><input type="checkbox" value="1" name=""></td>
-				<td>{{ $value->gid }}</td>
+				<td>{{ $value->id }}</td>
 				<td>{{ $value->proname }}</td>
 				<td>{{ $value->catename }}</td>
 				<td>￥{{ $value->price }}</td>
@@ -79,16 +80,16 @@
 					<!-- {{ $value->addtime }}	 -->
 				</td>
 				<td class="td-manage">
-				<a href="{{ URL('/admin/goods/commodity-list') }}/{{ $value->gid }}/edit"><button>修改</button></a>
-				<a href="javascript:doDel({{ $value->gid }})"><button>删除</button></a>
-				<a href="{{ URL ('/admin/goods/goods-info') }}/{{ $value->gid }}/edit"><button>添加详情</button></a>
+				<a href="{{ URL('/admin/goods/commodity-list') }}/{{ $value->id }}/edit"><button>修改</button></a>
+				<a href="javascript:doDel({{ $value->id }})"><button>删除</button></a>
+				<a href="{{ URL ('/admin/goods/goods-info') }}/{{ $value->id }}/edit"><button>添加详情</button></a>
 
 				</td>
 			</tr>
 			@endforeach
 		</tbody>
 	</table>
-
+	<center>{!! $list->render(); !!}</center>
 	</div>
 </div> 
 </body>

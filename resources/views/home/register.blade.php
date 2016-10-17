@@ -2,14 +2,14 @@
 <html>
  <head> 
   <title>注册用户</title> 
-  <link href="../../homes/css/bootstrap.css" rel="stylesheet" type="text/css" media="all" /> 
+  <link href="{{ asset('/homes/css/bootstrap.css') }}" rel="stylesheet" type="text/css" media="all" /> 
   <!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
   <!-- <script src="../../homes/js/jquery.min.js"></script> -->
-  <script src="../../homes/js/jquery.min.js"></script> 
+  <script src="{{ asset('/homes/js/jquery.min.js') }}"></script> 
  <script src="{{ asset('/homes/js/jquery-1.8.3.min.js') }}"></script> 
   <!-- Custom Theme files --> 
   <!--theme-style--> 
-  <link href="../../homes/css/style.css" rel="stylesheet" type="text/css" media="all" /> 
+  <link href="{{ asset('/homes/css/style.css') }}" rel="stylesheet" type="text/css" media="all" /> 
   <!--//theme-style--> 
   <meta name="viewport" content="width=device-width, initial-scale=1" /> 
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
@@ -22,8 +22,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <link href='http://fonts.useso.com/css?family=Roboto:400,100,300,500,700,900' rel='stylesheet' type='text/css'> --> 
   <!--//fonts--> 
   <!-- start menu --> 
-  <link href="../../homes/css/memenu.css" rel="stylesheet" type="text/css" media="all" /> 
-  <script type="text/javascript" src="../../homes/js/memenu.js"></script> 
+  <link href="{{ asset('/homes/css/memenu.css') }}" rel="stylesheet" type="text/css" media="all" /> 
+  <script type="text/javascript" src="{{ asset('/homes/js/memenu.js') }}"></script> 
   <script>$(document).ready(function(){$(".memenu").memenu();});</script> 
   <script src="../../homes/js/simpleCart.min.js"> </script> 
  </head> 
@@ -39,18 +39,23 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
       </form> 
      </div> 
      <div class="header-left"> 
-      <ul> 
-       <li><a class="lock" href="{{URL('/home/login')}}">登录</a></li> 
-       <li><a class="lock" href="{{URL('/home/register')}}">注册</a></li> 
-       <li> </li> 
-      </ul> 
+        @if(session('homeuser'))
+    <ul>
+      <li><a href="{{URL('/home/register')}}">欢迎 {{ session('homeuser') }} 的光临</a></li> 
+      <li><a href="{{URL('/home/logout')}}">退出</a></li>
+    </ul>
+  @else
+    <ul>
+      <li><a href="{{URL('/home/login')}}">登录</a></li> 
+      <li><a href="{{URL('/home/register')}}">注册</a></li> 
+    </ul>
+  @endif
       <div class="cart box_1"> 
        <a href="{{URL('/home/checkout')}}"> <h3> 
          <div class="total"> 
           <span class="simpleCart_total"></span> ( 
           <span id="simpleCart_quantity" class="simpleCart_quantity"></span> items) 
          </div> <img src="../../homes/images/cart.png" alt="" /></h3> </a> 
-       <p><a href="javascript:;" class="simpleCart_empty">显示用户名</a></p> 
       </div> 
       <div class="clearfix"> 
       </div> 

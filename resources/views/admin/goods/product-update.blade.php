@@ -26,7 +26,7 @@
 </head>
 <body>
 <div class="pd-20">
-    <nav class="breadcrumb"> <a href=" {{ URL('/admin/index/index') }}"><i class="Hui-iconfont">&#xe67f;</i>首页</a> 
+    <nav class="breadcrumb"> <a href=" {{ URL('/admin') }}"><i class="Hui-iconfont">&#xe67f;</i>首页</a> 
     <span class="c-gray en">&gt;</span><a href="{{ URL('/admin/goods/commodity-list') }}"> 商品列表</a>
     <span class="c-gray en">&gt;</span> <a href="{{ URL('/admin/goods/product-update') }}">修改商品</a> </nav>
 	<form action="{{ URL('/admin/goods/commodity-list') }}/{{ $list->id }}" method="post" class="form form-horizontal" id="form-article-add" name='myfrom' enctype="multipart/form-data">

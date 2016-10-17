@@ -84,7 +84,6 @@ catch (e) {
           <span id="simpleCart_quantity" class="simpleCart_quantity"></span> items)
          </div> <img src="{{ asset('/homes/images/cart.png') }}" alt="" /></h3> </a> 
          <!-- 123213123123123123 -->
-       <p><a href="{{URL('/home/passwd')}}" class="simpleCart_empty">显示用户名</a></p> 
       </div>
       <div class="clearfix"> 
       </div> 

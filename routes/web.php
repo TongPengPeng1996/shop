@@ -34,9 +34,30 @@ Route::post('/home/register','Home\RegisterController@store');
 Route::get('/home/register','Home\RegisterController@index');
 
  // 商品列表
- Route::get('/home/products',function (){
- 	return view('./home/products');
- });
+ // Route::get('/home/products',function (){
+ // 	return view('./home/products');
+ // });
+ /**
+ *	@auth 仝朋朋
+ *	@content  商品的前台遍历，品牌管理
+ */
+ /**************************************开始********/
+ // 详情
+Route::resource('/home/single','Home\SingleController');
+
+
+
+// 添加到购物车   
+Route::resource('/home/checkout','Home\CheckoutController');
+
+// 商品列表页
+Route::resource('/home/products','Home\ProductesController');
+
+
+ /***************************************结束*********/
+
+
+
 
  //新闻资讯
  Route::get('/home/blog','Home\BlogController@index');
@@ -52,14 +73,14 @@ Route::get('/home/contact',function (){
  });
 
 // 详情页
-Route::get('/home/single',function (){
- 	return view('./home/single');
- });
+// Route::get('/home/single',function (){
+//  	return view('./home/single');
+//  });
 
 // 购物车
-Route::get('/home/checkout',function (){
- 	return view('./home/checkout');
- });
+// Route::get('/home/checkout',function (){
+//  	return view('./home/checkout');
+//  });
 
 // 用户中心
 Route::get('/home/user_center',function (){
@@ -81,10 +102,25 @@ Route::get('/home/indent',function (){
  	return view('./home/indent');
 });
 
+/********************张鹏宇***********************/
+
+//城市级联显示处理
+Route::get('/home/addre/{upid?}','Home\DistrictController@find');
+
+//添加地址
+Route::resource('/home/address','Home\DistrictWriteController');
+
+//订单详情页
+Route::resource('/home/ok-order','Home\OkorderController');
+
 // 用户中心-》收货地址
-Route::get('/home/adjust',function (){
- 	return view('./home/adjust');
-});
+Route::resource('/home/adjust','Home\AdjustController');
+/********************张鹏宇结束*********************/
+
+// 用户中心-》收货地址
+// Route::get('/home/adjust',function (){
+//  	return view('./home/adjust');
+// });
 
 /***********************************************/
 // 验证码
@@ -103,7 +139,7 @@ Route::get('/admin',function(){
 });
 
 
-/*********************************/
+/***************继承******************/
 Route::get('/admin/base',function(){
 	return view('./admin/base/base');
 });
@@ -156,9 +192,10 @@ Route::get('/admin/order/editorder',function(){
 // });
 
 // 品牌中心
-Route::get('/admin/brand',function(){
-	return view('./admin/brand/brand-list');
-});
+// Route::get('/admin/brand',function(){
+// 	return view('./admin/brand/brand-list');
+// });
+
 
 // 登录
 Route::get('/admin/login',function(){
@@ -169,7 +206,7 @@ Route::get('/admin/login',function(){
 
 
 
-/**************************************************/
+/************************仝朋朋**************************/
 // 商品的增删改查
 Route::resource('/admin/goods/commodity-list','Goods\GoodsController');
 
@@ -185,12 +222,42 @@ Route::resource('/admin/goods/product-categorys','Goods\CategorysController');
 
 // 商品的添加分类
 Route::resource('/admin/goods/type','Goods\TypeController');
+
+// 商品添加顶级分类
+Route::resource('/admin/categorys','Admin\Goods\CategoryController');
+
 // 添加商品
 Route::resource('/admin/goods/product-add','Goods\AddgoodsController');
 
 // 下架商品
 Route::resource('/admin/goods/recycle','Admin\Goods\RecycleController');
 
-/***************************************************/
 // 品牌管理
 Route::resource('/admin/brand','Admin\Brand\BrandController');
+
+// 镇店商品 非卖
+Route::resource('/admin/introduce','Admin\Introduces\IntroduceController');
+
+// 商品推荐
+Route::resource('/admin/recommend','Admin\Activity\RecommendController');
+
+// 限时抢购
+Route::resource('/admin/timerob','Admin\Activity\TimerobController');
+
+/************************仝朋朋结束***************************/
+
+
+
+
+/****************************张鹏宇**********************************/
+//商城帮助增删改查
+Route::resource('/admin/shop-help/shop-help','Admin\shophelp\ShopHelpController');
+
+//多地址增删该查
+Route::resource('/admin/address/address','Admin\address\AddressController');
+
+
+
+/*******************************张鹏宇结束*******************************/
+
+

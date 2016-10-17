@@ -36,18 +36,23 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
       </form> 
      </div> 
      <div class="header-left"> 
-      <ul> 
-       <li><a class="lock" href="{{URL('/home/login')}}">登录</a></li> 
-       <li><a class="lock" href="{{URL('/home/register')}}">注册</a></li> 
-       <li> </li> 
-      </ul> 
+      @if(session('homeuser'))
+    <ul>
+      <li><a href="{{URL('/home/register')}}">欢迎 {{ session('homeuser') }} 的光临</a></li> 
+      <li><a href="{{URL('/home/logout')}}">退出</a></li>
+    </ul>
+  @else
+    <ul>
+      <li><a href="{{URL('/home/login')}}">登录</a></li> 
+      <li><a href="{{URL('/home/register')}}">注册</a></li> 
+    </ul>
+  @endif
       <div class="cart box_1"> 
        <a href="{{URL('/home/checkout')}}"> <h3> 
          <div class="total"> 
           <span class="simpleCart_total"></span> (
           <span id="simpleCart_quantity" class="simpleCart_quantity"></span> items)
          </div> <img src="../../homes/images/cart.png" alt="" /></h3> </a> 
-       <p><a href="javascript:void(0)" class="simpleCart_empty">显示用户名</a></p> 
       </div> 
       <div class="clearfix"> 
       </div> 

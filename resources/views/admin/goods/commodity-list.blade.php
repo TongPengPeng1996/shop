@@ -12,6 +12,7 @@
 <link href="{{ asset('/admins/css/H-ui.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('/admins/css/H-ui.admin.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('/admins/lib/Hui-iconfont/1.0.1/iconfont.css') }}" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" href="{{ asset('/admins/css/bootstrap.min.css') }}">
 <title>商品管理</title>
 </head>
 <body>
@@ -26,12 +27,36 @@
 		/admin/goods/product-add') }}">
 		<i class="Hui-iconfont">&#xe600;</i> 添加商品</a> 
 		<a class="btn btn-primary radius" onclick="article_add('添加资讯','article-add.html')" href="{{  URL('/admin/goods/type') }}"><i class="Hui-iconfont">&#xe600;</i> 添加分类</a> 
-	</span> <span class="r">共有数据：<strong>{{ $num }}</strong> 条</span> </div>
+	</span> <span class="r">本页共有数据：<strong>{{ $num }}</strong> 条</span> </div>
 	<div class="mt-20">
+		<!-- 搜索 -->
+		<!-- <center>
+			<form action="{{ URL('/admin/goods/commodity-list') }}" class="form-inline" >
+					<input type="hidden" name="_token" value="{{ csrf_token()}}">
+				搜索 <input type="text" name="name" size="30" class="form-control">
+					<input type="submit" class="btn btn-primary">
+			</form>
+		</center>
+		<br> -->
+		<!-- 搜索 -->
+		<!-- 删除 -->
 		<form action='' method='post' name='myform'>
 			<input type='hidden' name='_token' value="{{ csrf_token() }}">
 			<input type='hidden' name='_method' value="delete">
 		</form>
+		<!-- 删除 -->
+		<!-- 修改成推荐商品 -->
+		<form action='' method='post' name='activity'>
+			<input type='hidden' name='_token' value="{{ csrf_token() }}">
+			<input type='hidden' name='_method' value="put">
+		</form>
+		<!-- 修改成推荐商品 -->
+		<!-- 修改为限时抢购 -->
+			<form action='' method='post' name='timerob'>
+				<input type='hidden' name='_token' value="{{ csrf_token() }}">
+				<input type='hidden' name='_method' value="put">
+			</form>
+		<!-- 修改为限时抢购 -->
 	<table class="table table-border table-bordered table-hover table-bg table-sort">
 		<thead>
 			<tr class="text-c">
@@ -54,7 +79,7 @@
 			@foreach($list as $value)
 			<tr class="text-c">
 				<td><input type="checkbox" value="1" name=""></td>
-				<td>{{ $value->gid }}</td>
+				<td>{{ $value->id }}</td>
 				<td>{{ $value->proname }}</td>
 				<td>{{ $value->catename }}</td>
 				<td>￥{{ $value->price }}</td>
@@ -79,26 +104,51 @@
 					<!-- {{ $value->addtime }}	 -->
 				</td>
 				<td class="td-manage">
-				<a href="{{ URL('/admin/goods/commodity-list') }}/{{ $value->gid }}/edit"><button>修改</button></a>
-				<a href="javascript:doDel({{ $value->gid }})"><button>删除</button></a>
-				<a href="{{ URL ('/admin/goods/goods-info') }}/{{ $value->gid }}/edit"><button>添加详情</button></a>
-
+				<a href="{{ URL('/admin/goods/commodity-list') }}/{{ $value->id }}/edit"><button>修改</button></a>
+				<a href="javascript:doDel({{ $value->id }})"><button>删除</button></a>
+				<a href="{{ URL ('/admin/goods/goods-info') }}/{{ $value->id }}/edit"><button>添加详情</button></a>
+				@if($value->activity == 2)
+					<a href="{{ URL('/admin/recommend') }}/{{ $value->id }}"><button style="color:red;">取消推荐</button></a>
+				@else
+					<a href="javascript:doActivity({{ $value->id }})"><button>推荐商品</button></a>
+				@endif
+				@if($value->activity == 3)
+					<a href="{{ URL('/admin/timerob') }}/{{ $value->id }}" style="color:red;"><button>取消限时抢购</button></a>
+				@else
+					<a href="javascript:doTimerob({{ $value->id }})"><button>限时抢购</button></a>
+				@endif
 				</td>
 			</tr>
 			@endforeach
 		</tbody>
 	</table>
-
+	<center>{!!  $list->render(); !!}</center>
 	</div>
 </div> 
 </body>
 <script type="text/javascript">
+	// 删除
 	function doDel(id)
 	{
 		var form = document.myform;
 		var a = form.action = "{{ URL('/admin/goods/commodity-list') }}/"+id;
 		form.submit();
 		// alert(a);
+	}
+	// 推荐
+	function doActivity(id)
+	{
+		// alert(id);
+		var form = document.activity;
+		form.action = "{{ URL('/admin/recommend') }}/"+id;
+		form.submit();
+	}
+	// 限时抢购
+	function doTimerob(id)
+	{
+		var form = document.timerob;
+		form.action = "{{ URL('/admin/timerob') }}/"+id;
+		form.submit();
 	}
 </script>
 </html>
